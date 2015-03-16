@@ -38,7 +38,7 @@
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control search-form" placeholder="Search">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -97,13 +97,16 @@
             <li><a href="index.html">Dashboard</a></li>
             <li class="active">Users</li>
           </ol>
-            <table class="table table-striped">
+            <table id="sort-table" class="table table-striped tablesorter">
+            <thead>
               <tr>
                 <th><input type="checkbox"></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Group</th>
+                <th>Name <i class="glyphicon glyphicon-chevron-down"></th>
+                <th>Email <i class="glyphicon glyphicon-chevron-down"></th>
+                <th>Group <i class="glyphicon glyphicon-chevron-down"></th>
               </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td><input type="checkbox"></td>
                 <td><a href="user.html">Bob</a></td>
@@ -122,6 +125,7 @@
                 <td>doug@gmail.com</td>
                 <td>Member</td>
               </tr>
+            </tbody>
             </table>
             <nav>
               <ul class="pagination">
@@ -156,5 +160,23 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.tablesorter.js"></script>
+    <script>
+    $(function(){
+      $('#sort-table').tablesorter({
+        sortList:[[0,0],[1,0]]
+      });
+    });
+    </script>
+    <script>
+    var $rows = $('table tr');
+    $('.search-form').keyup(function(){
+      var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+      $rows.show().filter(function(){
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+      }).hide();
+    });
+    </script>
   </body>
 </html>
